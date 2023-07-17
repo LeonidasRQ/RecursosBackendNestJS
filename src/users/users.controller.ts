@@ -12,7 +12,7 @@ import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 
-@Controller('api/users')
+@Controller('users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
@@ -22,8 +22,8 @@ export class UsersController {
   }
 
   @Get()
-  findAll() {
-    const users = this.usersService.findAll();
+  async findAll() {
+    const users = await this.usersService.findAll();
     return { status: 'success', users };
   }
 
