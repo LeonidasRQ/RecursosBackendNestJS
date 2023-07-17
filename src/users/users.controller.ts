@@ -11,10 +11,14 @@ import {
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { ConfigService } from '@nestjs/config/dist';
 
 @Controller('users')
 export class UsersController {
-  constructor(private readonly usersService: UsersService) {}
+  constructor(
+    private readonly usersService: UsersService,
+    private config: ConfigService,
+  ) {}
 
   @Post()
   create(@Body() createUserDto: CreateUserDto) {
@@ -22,8 +26,8 @@ export class UsersController {
   }
 
   @Get()
-  findAll(@Query('limit') query) {
-    const users = this.usersService.findAll();
+  async findAll() {
+    const users = await this.usersService.findAll();
     return { status: 'success', users };
   }
 
